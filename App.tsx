@@ -1,114 +1,75 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {getPokemonsFromCurrentPage} from './services/pokemonsApi';
+import {Pokemons} from './Interfaces';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
+  ActivityIndicator,
+  FlatList,
   View,
+  Text,
+  Image,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section: React.FC<{
-  title: string;
-}> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [pokemons, setPokemons] = useState<Pokemons[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  useEffect(() => {
+    getPokemonsFromCurrentPage().then(pokemons_ => {
+      setPokemons(pokemons_);
+      setLoading(false);
+    });
+  }, []);
+
+  const renderItem = ({item}: {item: any}) => {
+    return (
+      <View style={styles.PokemonListContainer}>
+        <Image
+          source={{uri: item.sprites.front_default}}
+          style={styles.pokeImage}
+        />
+
+        <Text style={styles.pokeItemHeader}>{item.name}</Text>
+      </View>
+    );
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+    <SafeAreaView>
+      {loading && <ActivityIndicator size="large" color="#0064e1" />}
+      {!loading && (
+        <FlatList
+          data={pokemons}
+          renderItem={renderItem}
+          keyExtractor={(item: any) => {
+            return item.name;
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  PokemonListContainer: {
+    borderStyle: 'solid',
+    borderColor: '#fff',
+    borderBottomWidth: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: '#FAFAFA',
   },
-  sectionTitle: {
+  pokeImage: {
+    backgroundColor: 'transparent',
+    height: 80,
+    width: 80,
+  },
+  pokeItemHeader: {
+    color: 'black',
     fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
   },
 });
 
