@@ -5,7 +5,7 @@ export const pokemonInstance = axios.create({
 });
 
 export const getPokemonsFromCurrentPage = () =>
-  pokemonInstance.get().then(async res => {
+  pokemonInstance.get('https://pokeapi.co/api/v2/pokemon').then(async res => {
     let allPokemonInfo = [];
 
     const allPokemon = res.data.results;
