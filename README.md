@@ -10,7 +10,7 @@ The user can see:
 - a list of Pokemons in the Homepage
 - a Pokemon Detail page after clicking on a Pokemon image in the Homepage
 
-API used: https://pokeapi.co/docs/v2
+API used: https://pokeapi.co/docs/v2. 
 To see all endpoints available: https://pokeapi.co/docs/v2#resource-listspagination-section
 
 Endpoint used: https://pokeapi.co/api/v2/pokemon
