@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {getPokemonsFromCurrentPage} from './services/pokemonsApi';
 import {Pokemons} from './Interfaces';
+import Header from './components/Header';
 import {
   SafeAreaView,
   StyleSheet,
@@ -24,7 +25,7 @@ const App = () => {
 
   const renderItem = ({item}: {item: any}) => {
     return (
-      <View style={styles.PokemonListContainer}>
+      <View style={styles.pokemonListContainer}>
         <Image
           source={{uri: item.sprites.front_default}}
           style={styles.pokeImage}
@@ -36,6 +37,7 @@ const App = () => {
 
   return (
     <SafeAreaView>
+      <Header />
       {loading && <ActivityIndicator size="large" color="#0064e1" />}
       {!loading && (
         <FlatList
@@ -51,7 +53,7 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-  PokemonListContainer: {
+  pokemonListContainer: {
     borderStyle: 'solid',
     borderColor: '#fff',
     borderBottomWidth: 2,
