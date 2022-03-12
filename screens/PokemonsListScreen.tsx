@@ -6,12 +6,13 @@ import {
   Image,
   Text,
   View,
+  Pressable,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Pokemons} from '../Interfaces';
 import {getPokemonsFromCurrentPage} from '../services/pokemonsApi';
 
-const PokemonsListScreen = () => {
+const PokemonsListScreen = props => {
   const [pokemons, setPokemons] = useState<Pokemons[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,13 +23,19 @@ const PokemonsListScreen = () => {
     });
   }, []);
 
+  const goToPokemon = (id: number) => () => {
+    props.navigation.navigate('pokemon', id);
+  };
+
   const renderItem = ({item}: {item: any}) => {
     return (
       <View style={styles.pokemonListContainer}>
-        <Image
-          source={{uri: item.sprites.front_default}}
-          style={styles.pokeImage}
-        />
+        <Pressable onPress={goToPokemon(item.id)}>
+          <Image
+            source={{uri: item.sprites.front_default}}
+            style={styles.pokeImage}
+          />
+        </Pressable>
         <Text style={styles.pokeItemText}>{item.name}</Text>
       </View>
     );

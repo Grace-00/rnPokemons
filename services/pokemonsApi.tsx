@@ -19,3 +19,7 @@ export const getPokemonsFromCurrentPage = () =>
 
     return allPokemonInfo;
   });
+
+export const getPokemonDetail = async (id: number) => {
+  return await pokemonInstance.get(`${id}`);
+};

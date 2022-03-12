@@ -2,24 +2,44 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import Header from './components/Header';
 import PokemonsListScreen from './screens/PokemonsListScreen';
-
+import PokemonDetailScreen from './screens/PokemonDetailScreen';
 const App = () => {
   const Stack = createNativeStackNavigator();
 
   return (
     <>
-      <Header />
       <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={'PokemonsListScreen'}
-          screenOptions={{
-            headerShown: false,
-          }}>
+        <Stack.Navigator initialRouteName={'PokemonsListScreen'}>
           <Stack.Screen
             name="PokemonsListScreen"
             component={PokemonsListScreen}
+            options={{
+              title: 'Pokemons',
+              headerStyle: {
+                backgroundColor: '#E74C3C',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: 24,
+              },
+            }}
+          />
+          <Stack.Screen
+            name="pokemon"
+            component={PokemonDetailScreen}
+            options={{
+              title: 'Pokemon',
+              headerStyle: {
+                backgroundColor: '#E74C3C',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: 24,
+              },
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
