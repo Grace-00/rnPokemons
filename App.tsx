@@ -29,8 +29,7 @@ const App = () => {
           source={{uri: item.sprites.front_default}}
           style={styles.pokeImage}
         />
-
-        <Text style={styles.pokeItemHeader}>{item.name}</Text>
+        <Text style={styles.pokeItemText}>{item.name}</Text>
       </View>
     );
   };
@@ -63,11 +62,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFAFA',
   },
   pokeImage: {
-    backgroundColor: 'transparent',
     height: 80,
     width: 80,
   },
-  pokeItemHeader: {
+  pokeItemText: {
     color: 'black',
     fontSize: 24,
   },
