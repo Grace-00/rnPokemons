@@ -47,9 +47,9 @@ Something wasn't working correctly since I installed the navigator... so after m
 Created different branches depending on the feature I was adding.
 Navigator is finally working! NOT to use with SafeAreaView.
 
-13/03/22 Time estimates: 2h <br/>
-Added DetailScreen component.
+13/03/22 Time estimates: 4h <br/>
+Added DetailScreen + Pagination component.
 
 # <b>TO DO:</b> <br/>
-- adding pagination component 
-- defining Props types + avoid 'any' AT ALL COSTS 🤦‍♀️
+- fix pagination + detailScreen component 
+- avoid 'any' types
