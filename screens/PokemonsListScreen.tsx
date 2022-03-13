@@ -7,7 +7,9 @@ import {
   Text,
   View,
   Pressable,
+  Button,
 } from 'react-native';
+
 import React, {useState, useEffect} from 'react';
 import {Pokemons} from '../Interfaces';
 import {getPokemonsFromCurrentPage} from '../services/pokemonsApi';
@@ -17,13 +19,28 @@ const PokemonsListScreen = (props: {
 }) => {
   const [pokemons, setPokemons] = useState<Pokemons[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPageUrl, setCurrentPageUrl] = useState(
+    'https://pokeapi.co/api/v2/pokemon',
+  );
+  const [nextPageUrl, setNextPageUrl] = useState('');
+  const [prevPageUrl, setPrevPageUrl] = useState('');
 
   useEffect(() => {
-    getPokemonsFromCurrentPage().then(pokemons_ => {
-      setPokemons(pokemons_);
+    getPokemonsFromCurrentPage(currentPageUrl).then(pokemons_ => {
+      setPokemons(pokemons_.allPokemonInfo);
+      setNextPageUrl(pokemons_.nextPage);
+      setPrevPageUrl(pokemons_.prevPage);
       setLoading(false);
     });
-  }, []);
+  }, [currentPageUrl]);
+
+  const next = () => {
+    setCurrentPageUrl(nextPageUrl);
+  };
+
+  const previous = () => {
+    prevPageUrl !== null ? setCurrentPageUrl(prevPageUrl) : null;
+  };
 
   const goToPokemon = (id: number) => () => {
     props.navigation.navigate('pokemon', id);
@@ -47,11 +64,17 @@ const PokemonsListScreen = (props: {
     <SafeAreaView>
       {loading && <ActivityIndicator size="large" color="#0064e1" />}
       {!loading && (
-        <FlatList
-          data={pokemons}
-          renderItem={renderItem}
-          keyExtractor={(item: any) => item.id}
-        />
+        <>
+          <FlatList
+            data={pokemons}
+            renderItem={renderItem}
+            keyExtractor={(item: any) => item.id}
+          />
+          <View style={styles.paginationContainer}>
+            <Button title="previous" onPress={previous} />
+            <Button title="next" onPress={next} />
+          </View>
+        </>
       )}
     </SafeAreaView>
   );
@@ -77,5 +100,9 @@ const styles = StyleSheet.create({
   pokeItemText: {
     color: 'black',
     fontSize: 24,
+  },
+  paginationContainer: {
+    flexDirection: 'row',
+    marginLeft: 20,
   },
 });
