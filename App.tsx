@@ -16,7 +16,7 @@ const App = () => {
             name="PokemonsListScreen"
             component={PokemonsListScreen}
             options={{
-              title: 'Pokemons',
+              title: 'Pokemon List',
               headerStyle: {
                 backgroundColor: '#E74C3C',
               },
