@@ -12,7 +12,9 @@ import React, {useState, useEffect} from 'react';
 import {Pokemons} from '../Interfaces';
 import {getPokemonsFromCurrentPage} from '../services/pokemonsApi';
 
-const PokemonsListScreen = props => {
+const PokemonsListScreen = (props: {
+  navigation: {navigate: (arg0: string, arg1: number) => void};
+}) => {
   const [pokemons, setPokemons] = useState<Pokemons[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -48,9 +50,7 @@ const PokemonsListScreen = props => {
         <FlatList
           data={pokemons}
           renderItem={renderItem}
-          keyExtractor={(item: any) => {
-            return item.name;
-          }}
+          keyExtractor={(item: any) => item.id}
         />
       )}
     </SafeAreaView>

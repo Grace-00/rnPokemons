@@ -3,8 +3,9 @@ import React, {useState, useEffect} from 'react';
 import {getPokemonDetail} from '../services/pokemonsApi';
 import {Pokemon} from '../Interfaces';
 
-const PokemonDetailScreen = props => {
+const PokemonDetailScreen = (props: {route: {params: number}}) => {
   const [pokemon, setPokemon] = useState<Pokemon>({});
+
   useEffect(() => {
     getPokemonDetail(props.route.params).then(json => setPokemon(json.data));
   }, [props.route.params]);

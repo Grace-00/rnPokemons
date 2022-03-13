@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import PokemonsListScreen from './screens/PokemonsListScreen';
 import PokemonDetailScreen from './screens/PokemonDetailScreen';
+
 const App = () => {
   const Stack = createNativeStackNavigator();
 
