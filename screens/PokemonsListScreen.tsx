@@ -32,7 +32,7 @@ const PokemonsListScreen = props => {
       <View style={styles.pokemonListContainer}>
         <Pressable onPress={goToPokemon(item.id)}>
           <Image
-            source={{uri: item.sprites.front_default}}
+            source={{uri: item.sprites?.front_default}}
             style={styles.pokeImage}
           />
         </Pressable>
